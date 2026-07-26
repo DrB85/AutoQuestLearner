@@ -276,6 +276,47 @@
   .credits p{ color: var(--muted); max-width: 720px; margin: 0 auto 16px; text-align:center; }
   .credits .names{ color: var(--parchment); }
 
+  /* ---------- Changelog ---------- */
+  .changelog{
+    max-width: 760px;
+    margin: 0 auto;
+    border-left: 2px solid var(--border-bright);
+    padding-left: 28px;
+  }
+  .change-entry{ position: relative; padding-bottom: 32px; }
+  .change-entry:last-child{ padding-bottom: 0; }
+  .change-entry::before{
+    content:"";
+    position:absolute; left:-33px; top: 4px;
+    width:10px; height:10px; border-radius:50%;
+    background: var(--gold-bright);
+    box-shadow: 0 0 0 3px var(--bg), 0 0 10px rgba(233,205,131,0.5);
+  }
+  .change-head{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    margin-bottom: 6px;
+  }
+  .change-version{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold-bright);
+    background: rgba(201,162,74,0.12);
+    border: 1px solid var(--border-bright);
+    border-radius: 3px;
+    padding: 2px 9px;
+  }
+  .change-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted-2);
+  }
+  .change-entry ul{ margin: 8px 0 0; padding-left: 18px; color: var(--muted); }
+  .change-entry li{ margin-bottom: 4px; font-size: 0.92rem; }
+  .changelog-more{
+    text-align:center; margin-top: 34px;
+    font-family:'JetBrains Mono', monospace; font-size: 0.8rem;
+  }
+
   /* ---------- Footer ---------- */
   footer{
     border-top: 1px solid var(--border);
@@ -303,8 +344,8 @@
       <a href="#features">Features</a>
       <a href="#commands">Commands</a>
       <a href="#install">Install</a>
-      <a href="#credits">Credits</a>
-      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+      <a href="#changelog">Changelog</a>
+      <a href="https://github.com/DrB85/AutoQuestLearner" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </div>
 </div>
@@ -495,6 +536,33 @@
         <p>Check that it's enabled in your AddOns list at the character select screen, then run <code>/aql guide</code> in-game any time.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="changelog">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Version history</p>
+      <h2>Changelog</h2>
+      <p>Every zip in <span class="mono">downloads/</span> is also archived as a dated GitHub Release, so older versions stay downloadable.</p>
+    </div>
+
+    <!-- Add a new .change-entry block at the TOP of this list each time you publish an update. -->
+    <div class="changelog">
+
+      <div class="change-entry">
+        <div class="change-head">
+          <span class="change-version">v2.0</span>
+          <span class="change-date">July 2026</span>
+        </div>
+        <ul>
+          <li>Initial public release: smart arrow, learned location database, quest tracker, map/minimap nodes, route planner, and quest item buttons.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="changelog-more">Full history &amp; downloads: <a href="https://github.com/DrB85/AutoQuestLearner/releases" target="_blank" rel="noopener">GitHub Releases &rarr;</a></p>
   </div>
 </section>
 
