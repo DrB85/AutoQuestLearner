@@ -397,7 +397,13 @@
       <div class="card">
         <img class="card-icon" src="assets/img/available.png" alt="">
         <h3>Nearby quest suggestions</h3>
-        <p>Filtered by level range, real bitwise faction checks, and completion history from the server &mdash; not just what this addon has seen before.</p>
+        <p>Filtered by level range, real bitwise faction checks, reputation requirements, and completion history checked against the server &mdash; not just what this addon has seen before. Chain prerequisites are respected too, including "must complete all/any of these," "only while another quest is active," and mutually exclusive siblings, plus quests that need a specific item in hand before they'll even let you interact.</p>
+      </div>
+
+      <div class="card">
+        <img class="card-icon" src="assets/img/tracker_search.png" alt="">
+        <h3>Share what you've learned</h3>
+        <p>Live sync with your party, raid, or guild applies newly learned locations in real time. No group? <span class="mono">/aql export</span> and <span class="mono">/aql import</span> trade your whole learned history with another player anytime &mdash; never overwriting what you already have.</p>
       </div>
 
       <div class="card">
@@ -455,6 +461,7 @@
       </div>
 
     </div>
+    <p class="version-note" style="text-align:center; margin-top:32px;">Note: this server runs a custom class roster different from vanilla/WotLK's standard nine classes, so class-restricted quests are not filtered out of Available Quest suggestions &mdash; there's no reliable way to check that here.</p>
   </div>
 </section>
 
@@ -484,6 +491,13 @@
       </div>
 
       <div class="book-group">
+        <div class="book-group-title">Sharing</div>
+        <div class="cmd-row"><div class="cmd">/aql sync</div><div class="cmd-desc">Check location-sharing status with party/raid/guild, and how many locations you've received/applied this session.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql export</div><div class="cmd-desc">Get a copyable text string of everything you've learned, to share with another player running this addon.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql import</div><div class="cmd-desc">Paste someone else's export string to add their learned locations to yours. Never overwrites anything you already have.</div></div>
+      </div>
+
+      <div class="book-group">
         <div class="book-group-title">Display &amp; behavior</div>
         <div class="cmd-row"><div class="cmd">/aql tracker</div><div class="cmd-desc">Toggles this addon's own quest tracker panel.</div></div>
         <div class="cmd-row"><div class="cmd">/aql blizztracker</div><div class="cmd-desc">Toggles Blizzard's default quest tracker.</div></div>
@@ -502,6 +516,7 @@
         <div class="cmd-row"><div class="cmd">/aql gossip</div><div class="cmd-desc">Reprocesses the currently open gossip window (rarely needed manually).</div></div>
         <div class="cmd-row"><div class="cmd">/aql arrow</div><div class="cmd-desc">Explains exactly why the navigation arrow is or isn't showing right now.</div></div>
         <div class="cmd-row"><div class="cmd">/aql questitems</div><div class="cmd-desc">Diagnostic for the quest item button panel.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql calibrate [reset]</div><div class="cmd-desc">Shows minimap-scale calibration progress for starting zones that self-measure from your movement (Shadowglen, Coldridge Valley, Camp Narache, Red Cloud Mesa, Deathknell, Valley of Trials). "reset" re-measures your current zone.</div></div>
         <div class="cmd-row"><div class="cmd">/aql debug</div><div class="cmd-desc">Prints general diagnostic info.</div></div>
         <div class="cmd-row"><div class="cmd">/aql flickerdebug</div><div class="cmd-desc">Records 5 seconds and reports tracker function calls &mdash; useful if the UI seems to flicker.</div></div>
         <div class="cmd-row"><div class="cmd">/aql perf / perfdebug</div><div class="cmd-desc">Memory and FPS-impact checks for this addon specifically.</div></div>
@@ -549,6 +564,18 @@
 
     <!-- Add a new .change-entry block at the TOP of this list each time you publish an update. -->
     <div class="changelog">
+
+      <div class="change-entry">
+        <div class="change-head">
+          <span class="change-version">v2.1</span>
+          <span class="change-date">July 2026</span>
+        </div>
+        <ul>
+          <li>Share what you've learned &mdash; live location sync with party/raid/guild, plus <span class="mono">/aql export</span> and <span class="mono">/aql import</span> to trade your full learned history with anyone, no grouping required.</li>
+          <li>Available quest suggestions now also check reputation requirements and known chain prerequisites (ALL/ANY-of, "only while another quest is active," mutually exclusive siblings), and correctly hold back quests that need a specific item in hand first.</li>
+          <li>Self-calibrating minimap scale for starting zones (Shadowglen, Coldridge Valley, Camp Narache, Red Cloud Mesa, Deathknell, Valley of Trials) via the new <span class="mono">/aql calibrate</span> command.</li>
+        </ul>
+      </div>
 
       <div class="change-entry">
         <div class="change-head">
