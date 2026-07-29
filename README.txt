@@ -16,13 +16,11 @@ original Questie project (by Aero, Logon, Muehe, TheCrux/BreakBB,
 Drejjmit, Dyaxler, Cheeq, TechnoHunter, and other contributors).
 Precise "stand here" coordinates for zone-wide kill/interact
 objectives are supplemented with data from TourGuideVanilla (by
-cralor, credit to Tekkub for the original framework). Precise quest
-giver and turn-in coordinates are further supplemented from additional
-community leveling-guide data. A lot of work has gone into this -- compiling
-and merging quest, NPC, and objective location data together from
-multiple different community databases, scraping, and cross-
-referencing sources to fill in the gaps that any single one of them
-leaves on its own.
+cralor, credit to Tekkub for the original framework). A lot of work
+has gone into this -- compiling and merging quest, NPC, and objective
+location data together from multiple different community databases,
+scraping, and cross-referencing sources to fill in the gaps that any
+single one of them leaves on its own.
 
 ----------------------------------------
  INSTALLATION
@@ -54,14 +52,26 @@ Key features:
   - Built-in smart arrow -- points you toward your next quest
     objective or turn-in without needing a separate addon
   - Learns and saves quest giver, turn-in, and objective locations
-    automatically as you play, filling in gaps in the bundled data
+    automatically as you play, filling in gaps in the bundled data --
+    even just targeting an NPC you haven't dealt with yet can teach
+    its location, if it's a known giver/turn-in for something
   - Available quest suggestions -- the arrow and map can also point
     you toward nearby quests you haven't picked up yet, not just
     what's already in your log. Filtered by level range, faction
     (a real bitwise check, not just whole-faction), actual completion
     history (checked against the server, not just this addon's own
-    records), and known chain prerequisites, so it tries hard not to
-    suggest something you can't actually take yet.
+    records), reputation requirements, and known chain prerequisites
+    -- including "must complete ALL of these", "must complete ANY ONE
+    of these", "only available while a specific other quest is
+    active", and "mutually exclusive with a sibling quest" -- so it
+    tries hard not to suggest something you can't actually take yet.
+    Quests that need a specific item already in hand before they'll
+    even let you interact are also correctly held back until you
+    actually have it.
+  - Share what you've learned with other players -- live sync with
+    party/raid/guild in real time, or /aql export and /aql import for
+    trading your whole learned history with someone anytime, no
+    grouping required
   - Quest item buttons -- a small movable panel shows the icon for any
     "use this on the objective" quest item (like an Essence Extractor)
     so you can use it with one click, same as from your bags
@@ -79,6 +89,11 @@ Key features:
   - Quest chain preview -- shows the next quest in a chain when one
     is known, right when you're about to turn something in
   - TomTom integration (optional, if you have TomTom installed)
+
+Note: this server runs a custom class roster different from vanilla/
+WotLK's standard nine classes, so class-restricted quests are NOT
+filtered out of Available Quest suggestions -- there's no reliable way
+to check that here.
 
 This addon is still a work in progress. Bugs and gaps in the location
 data are expected -- if you find one, /aql learn (see below) helps fix
@@ -131,6 +146,18 @@ install the addon, too.
     Detailed breakdown of how much the shared learned database
     currently knows -- quest count, NPC count, etc.
 
+/aql sync
+    Check location-sharing status with party/raid/guild, and how many
+    locations you've received/applied this session.
+
+/aql export
+    Get a copyable text string of everything you've learned, to share
+    with another player running this addon.
+
+/aql import
+    Paste someone else's export string to add their learned locations
+    to yours. Never overwrites anything you already have.
+
 /aql opendb [questID]
     Opens that quest's page on the Ascension Database in your browser
     -- with a quest selected/open in your quest log, or a specific
@@ -182,6 +209,18 @@ install the addon, too.
 /aql questitems
     Diagnostic for the quest item button panel -- shows what's
     currently detected and why a button might not be appearing.
+
+/aql calibrate [reset]
+    Shows minimap-scale calibration progress for the starting-zone
+    sub-areas that need it (Shadowglen, Coldridge Valley, Camp Narache,
+    Red Cloud Mesa, Deathknell, Valley of Trials) -- these get
+    self-measured from your actual movement rather than relying on
+    static data, since no external database has this exact value for
+    them. Most of these start with a real (though not client-verified)
+    estimate from a modern client's own zone data as an interim value
+    while self-calibration is still collecting samples; that self-
+    measured value always takes over once it's ready. "/aql calibrate
+    reset" re-measures your current zone if needed.
 
 /aql debug
     Prints general diagnostic info.
