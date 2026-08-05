@@ -326,6 +326,27 @@
   footer .mono{ color: var(--muted-2); font-size: 0.78rem; }
   footer a{ color: var(--muted); }
 
+  .support-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 20px;
+    padding: 10px 20px;
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(201,162,74,0.12), rgba(201,162,74,0.04));
+    color: var(--gold-bright) !important;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .support-btn:hover{
+    background: linear-gradient(180deg, rgba(201,162,74,0.22), rgba(201,162,74,0.08));
+    border-color: var(--gold-bright);
+  }
+
   .divider-arrow{
     display:flex; justify-content:center; margin: 0 0 8px;
   }
@@ -666,6 +687,7 @@
 
 <footer>
   <div class="divider-arrow"><img src="assets/img/arrow.png" alt=""></div>
+  <a class="support-btn" href="https://cash.app/$Drbbatman" target="_blank" rel="noopener">&#9749; Support Development &mdash; $Drbbatman</a>
   <p class="mono">AutoQuestLearner &middot; Author: Ezinagro &middot; <a href="mailto:Ezinagro1985@gmail.com">Ezinagro1985@gmail.com</a></p>
   <p class="mono">Feedback on anything broken, missing, or confusing is always welcome.</p>
 </footer>
