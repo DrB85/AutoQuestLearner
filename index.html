@@ -244,6 +244,30 @@
   .cmd{ color: var(--gold-bright); font-family:'JetBrains Mono', monospace; font-size: 0.86rem; white-space: normal; word-break: break-word; }
   .cmd-desc{ color: var(--muted); font-size: 0.9rem; align-self:center; }
 
+  .book-group-collapsible summary{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    padding: 16px 24px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .book-group-collapsible summary::-webkit-details-marker{ display: none; }
+  .book-group-collapsible summary::before{
+    content: "\25B8";
+    display: inline-block;
+    color: var(--gold);
+    transition: transform 0.15s ease;
+  }
+  .book-group-collapsible[open] summary::before{ transform: rotate(90deg); }
+  .book-group-collapsible summary:hover{ color: var(--gold-bright); }
+  .book-group-collapsible .cmd-row:first-of-type{ border-top: 1px solid rgba(74,58,34,0.4); }
+
   /* ---------- Install steps ---------- */
   .steps{
     counter-reset: step;
@@ -521,68 +545,79 @@
     <div class="section-head">
       <p class="eyebrow">Reference</p>
       <h2>Slash commands</h2>
-      <p>Everything is reachable from <span class="mono">/aql</span>. The most useful ones day-to-day are <span class="mono">learn</span>, <span class="mono">route</span>, and <span class="mono">config</span>.</p>
+      <p>Everything is reachable from <span class="mono">/aql</span>. The most useful ones day-to-day are <span class="mono">learn</span>, <span class="mono">route</span>, and <span class="mono">config</span>. Click a heading below to expand the rest &mdash; most people never need to.</p>
     </div>
 
     <div class="book">
       <div class="book-group">
         <div class="book-group-title">Core</div>
-        <div class="cmd-row"><div class="cmd">/aql, /aql status</div><div class="cmd-desc">Short status summary and the command list, in chat.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql, /aql status</div><div class="cmd-desc">Short status summary and the essential command list, in chat. <span class="mono">/aql help all</span> shows everything.</div></div>
         <div class="cmd-row"><div class="cmd">/aql guide</div><div class="cmd-desc">Opens the in-game how-to-use guide (also runs automatically on first install).</div></div>
         <div class="cmd-row"><div class="cmd">/aql config</div><div class="cmd-desc">Opens the settings panel, with quick buttons for Guide, Route, Zone, and Chain.</div></div>
-      </div>
-
-      <div class="book-group">
-        <div class="book-group-title">Questing</div>
+        <div class="cmd-row"><div class="cmd">/aql learn [quest name]</div><div class="cmd-desc">Saves your current location as an objective or turn-in for that quest &mdash; the main way bad data gets corrected.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql missing</div><div class="cmd-desc">Reports that a quest giver the arrow just sent you to genuinely isn't there &mdash; run it standing on the spot.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql sleep [questID]</div><div class="cmd-desc">Stops an available (not-yet-picked-up) quest from being suggested, on every character, until woken back up.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql wake [questID|all]</div><div class="cmd-desc">Undoes a sleep. With no argument, wakes whatever the arrow's currently pointing at.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql sync</div><div class="cmd-desc">Check location-sharing status with party/raid/guild, and how many locations you've received/applied this session.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql export</div><div class="cmd-desc">Get a copyable text string of everything you've learned, to share with another player running this addon.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql import</div><div class="cmd-desc">Paste someone else's export string to add their learned locations to yours. Never overwrites anything you already have.</div></div>
         <div class="cmd-row"><div class="cmd">/aql route</div><div class="cmd-desc">Suggests an order to tackle your active quests, clustering nearby ones together.</div></div>
         <div class="cmd-row"><div class="cmd">/aql zone</div><div class="cmd-desc">Shows how many known quests you've completed in your current zone.</div></div>
         <div class="cmd-row"><div class="cmd">/aql chain [quest name]</div><div class="cmd-desc">Shows the next quest in the chain. Uses your pinned quest if no name is given.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql learn [quest name]</div><div class="cmd-desc">Saves your current location as an objective or turn-in for that quest &mdash; the main way bad data gets corrected.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql opendb [questID]</div><div class="cmd-desc">Opens that quest on the Ascension Database in your browser.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql sleep [questID]</div><div class="cmd-desc">Stops an available (not-yet-picked-up) quest from being suggested, on every character, until woken back up.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql wake [questID|all]</div><div class="cmd-desc">Undoes a sleep. With no argument, wakes whatever the arrow's currently pointing at.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql tracker</div><div class="cmd-desc">Toggles this addon's own quest tracker panel.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql unpin</div><div class="cmd-desc">Clears a pinned quest, returning the arrow to auto-select. Alt+Right-Click does the same.</div></div>
+      </div>
+
+      <details class="book-group book-group-collapsible">
+        <summary>More settings &amp; tools</summary>
+        <div class="cmd-row"><div class="cmd">/aql db</div><div class="cmd-desc">Breakdown of the shared learned database &mdash; quest count, NPC count, and more.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql learnedstats</div><div class="cmd-desc">Shows how much has actually been learned so far, account-wide, all characters combined.</div></div>
         <div class="cmd-row"><div class="cmd">/aql floor up|down|clear</div><div class="cmd-desc">While standing on an unresolved pin, teaches the arrow which way the real spot actually is &mdash; applied to that whole spawn cluster, not just the one point.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql unavailable [clear]</div><div class="cmd-desc">Lists quests the addon learned were never actually offered despite passing every check, or clears that.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql proximity</div><div class="cmd-desc">Toggles automatic proximity-based objective learning (on by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql focus</div><div class="cmd-desc">Shows only what the arrow is tracking, instead of everything known nearby.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql blizztracker</div><div class="cmd-desc">Toggles Blizzard's default quest tracker.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql map</div><div class="cmd-desc">Forces an update of map nodes.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql scan</div><div class="cmd-desc">Forces an immediate proximity scan for nearby quest givers.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql tomtomauto</div><div class="cmd-desc">Toggles auto-selecting the closest TomTom waypoint, if TomTom is installed.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql opendb [questID]</div><div class="cmd-desc">Opens that quest on the Ascension Database in your browser.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql announceparty</div><div class="cmd-desc">Toggles announcing quest accept/complete/abandon in party/raid chat (off by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql announcepartyprogress</div><div class="cmd-desc">Toggles announcing kill/loot progress (e.g. "4/8") in party/raid chat (off by default, separate from the above).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql questitemtooltip</div><div class="cmd-desc">Toggles showing quest progress on item tooltips, anywhere an item tooltip shows up (on by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql lock</div><div class="cmd-desc">Toggles locking the tracker's position/size so it can't be accidentally dragged or resized.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql availrange [number]</div><div class="cmd-desc">Sets how far the arrow will look for an available quest to auto-suggest (default 20).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql availrangeactive [number]</div><div class="cmd-desc">Same, but specifically while you already have a real active-quest objective to head toward (default 5, tighter).</div></div>
+      </details>
+
+      <details class="book-group book-group-collapsible">
+        <summary>Advanced &amp; rarely needed</summary>
+        <div class="cmd-row"><div class="cmd">/aql learnnotify</div><div class="cmd-desc">Toggles the automatic "Learned a new spawn point" chat notification (on by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql learnedstatsauto</div><div class="cmd-desc">Toggles showing the learned-stats summary automatically every login/reload (on by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql trackascension</div><div class="cmd-desc">Toggles whether Ascension's own custom-added quests get suggested for pickup at all (off by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql trackclassquests</div><div class="cmd-desc">Toggles whether class-restricted quests get suggested for pickup at all, even for a matching class (off by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql zonenudge</div><div class="cmd-desc">Toggles the one-time-per-zone nudge suggesting where to go next once a zone's known quests are mostly done.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql zonefilter</div><div class="cmd-desc">Toggles showing only current-zone quests in the tracker. Pinned quests and unknown-location quests always show.</div></div>
         <div class="cmd-row"><div class="cmd">/aql pvprequired [clear]</div><div class="cmd-desc">Lists quests flagged as needing a PvP flag to interact with, learned from the game's own error message.</div></div>
         <div class="cmd-row"><div class="cmd">/aql reprequired [clear]</div><div class="cmd-desc">Lists quests flagged as needing more reputation than you currently have, same idea as above.</div></div>
-      </div>
-
-      <div class="book-group">
-        <div class="book-group-title">Sharing</div>
-        <div class="cmd-row"><div class="cmd">/aql sync</div><div class="cmd-desc">Check location-sharing status with party/raid/guild, and how many locations you've received/applied this session.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql export</div><div class="cmd-desc">Get a copyable text string of everything you've learned &mdash; giver/turn-in and kill/collect spawns alike &mdash; to share with another player running this addon.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql import</div><div class="cmd-desc">Paste someone else's export string to add their learned locations to yours. Never overwrites anything you already have.</div></div>
-      </div>
-
-      <div class="book-group">
-        <div class="book-group-title">Display &amp; behavior</div>
-        <div class="cmd-row"><div class="cmd">/aql tracker</div><div class="cmd-desc">Toggles this addon's own quest tracker panel.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql blizztracker</div><div class="cmd-desc">Toggles Blizzard's default quest tracker.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql zonefilter</div><div class="cmd-desc">Toggles showing only current-zone quests in the tracker. Pinned quests and unknown-location quests always show.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql map</div><div class="cmd-desc">Forces an update of map nodes.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql focus</div><div class="cmd-desc">Shows only what the arrow is tracking, instead of everything known nearby.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql unpin</div><div class="cmd-desc">Clears a pinned quest, returning the arrow to auto-select. Alt+Right-Click does the same.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql proximity</div><div class="cmd-desc">Toggles automatic proximity-based objective learning (on by default).</div></div>
-        <div class="cmd-row"><div class="cmd">/aql tomtomauto</div><div class="cmd-desc">Toggles auto-selecting the closest TomTom waypoint, if TomTom is installed.</div></div>
-      </div>
-
-      <div class="book-group">
-        <div class="book-group-title">Diagnostics</div>
-        <div class="cmd-row"><div class="cmd">/aql db</div><div class="cmd-desc">Breakdown of the shared learned database &mdash; quest count, NPC count, and more.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql resync</div><div class="cmd-desc">Force-reloads all learned locations and refreshes map nodes.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql scan</div><div class="cmd-desc">Forces an immediate proximity scan for nearby quest givers.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql gossip</div><div class="cmd-desc">Reprocesses the currently open gossip window (rarely needed manually).</div></div>
-        <div class="cmd-row"><div class="cmd">/aql why [questID]</div><div class="cmd-desc">Explains exactly why a quest is or isn't currently showing as available.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql arrow</div><div class="cmd-desc">Explains exactly why the navigation arrow is or isn't showing right now.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql questitems</div><div class="cmd-desc">Diagnostic for the quest item button panel.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql calibrate [reset]</div><div class="cmd-desc">Shows minimap-scale calibration progress for starting zones that self-measure from your movement (Shadowglen, Coldridge Valley, Camp Narache, Red Cloud Mesa, Deathknell, Valley of Trials). "reset" re-measures your current zone.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql killdebug</div><div class="cmd-desc">Toggles chat output for every kill's parsed NPC ID and whether a matching map node was found.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql unavailable [clear]</div><div class="cmd-desc">Lists quests the addon learned were never actually offered despite passing every check, or clears that.</div></div>
         <div class="cmd-row"><div class="cmd">/aql respawntimers [clear]</div><div class="cmd-desc">Lists (or clears) learned per-NPC respawn intervals, used once observed instead of the default guess.</div></div>
         <div class="cmd-row"><div class="cmd">/aql backfillids</div><div class="cmd-desc">Re-runs the one-time NPC-identity backfill on existing learned spawns (normally runs once automatically on login).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql resync</div><div class="cmd-desc">Force-reloads all learned locations and refreshes map nodes.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql gossip</div><div class="cmd-desc">Reprocesses the currently open gossip window (rarely needed manually).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql calibrate [reset]</div><div class="cmd-desc">Shows minimap-scale calibration progress for starting zones that self-measure from your movement (Shadowglen, Coldridge Valley, Camp Narache, Red Cloud Mesa, Deathknell, Valley of Trials). "reset" re-measures your current zone.</div></div>
+      </details>
+
+      <details class="book-group book-group-collapsible">
+        <summary>Diagnostics &amp; troubleshooting</summary>
+        <div class="cmd-row"><div class="cmd">/aql arrow</div><div class="cmd-desc">Explains exactly why the navigation arrow is or isn't showing right now.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql why [questID]</div><div class="cmd-desc">Explains exactly why a quest is or isn't currently showing as available.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql questitems</div><div class="cmd-desc">Diagnostic for the quest item button panel.</div></div>
         <div class="cmd-row"><div class="cmd">/aql debug</div><div class="cmd-desc">Prints general diagnostic info.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql debuglog</div><div class="cmd-desc">Toggles internal diagnostic logging to chat (off by default).</div></div>
+        <div class="cmd-row"><div class="cmd">/aql killdebug</div><div class="cmd-desc">Toggles chat output for every kill's parsed NPC ID and whether a matching map node was found.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql clusterdebug</div><div class="cmd-desc">Toggles a visual debug overlay on the world map for cluster merging.</div></div>
         <div class="cmd-row"><div class="cmd">/aql flickerdebug</div><div class="cmd-desc">Records 5 seconds and reports tracker function calls &mdash; useful if the UI seems to flicker.</div></div>
         <div class="cmd-row"><div class="cmd">/aql perf / perfdebug</div><div class="cmd-desc">Memory and FPS-impact checks for this addon specifically.</div></div>
-      </div>
+      </details>
 
       <div class="book-group">
         <div class="book-group-title">Mouse actions</div>

@@ -16,11 +16,18 @@ original Questie project (by Aero, Logon, Muehe, TheCrux/BreakBB,
 Drejjmit, Dyaxler, Cheeq, TechnoHunter, and other contributors).
 Precise "stand here" coordinates for zone-wide kill/interact
 objectives are supplemented with data from TourGuideVanilla (by
-cralor, credit to Tekkub for the original framework). A lot of work
-has gone into this -- compiling and merging quest, NPC, and objective
-location data together from multiple different community databases,
-scraping, and cross-referencing sources to fill in the gaps that any
-single one of them leaves on its own.
+cralor, credit to Tekkub for the original framework).
+
+A lot of what powers this addon comes from projects that had gone
+quiet -- community databases nobody had cross-checked in years, NPC
+data compiled by contributors long since moved on, coordinates nobody
+had gone back to audit. The work here has been less about starting
+from scratch and more about doing the maintenance those projects
+needed: validating old data against independent sources (including
+authentic client data pulled directly from a real 3.3.5a build, and
+creature spawn data cross-checked against three separate independently-
+sourced databases), pulling exact figures from real game files instead
+of estimating, and fixing what had quietly drifted wrong.
 
 ----------------------------------------
  INSTALLATION
@@ -50,24 +57,51 @@ Alliance and Horde are both supported.
 
 Key features:
   - Built-in smart arrow -- points you toward your next quest
-    objective or turn-in without needing a separate addon
+    objective or turn-in without needing a separate addon, and now
+    shows the actual objective description underneath the target name
+    (not just "find X nearby") so unusual objectives -- a boss that
+    must be summoned first, an item that must be used on something --
+    are actually explained, not just pointed at
   - Learns and saves quest giver, turn-in, and objective locations
     automatically as you play, filling in gaps in the bundled data --
     even just targeting an NPC you haven't dealt with yet can teach
-    its location, if it's a known giver/turn-in for something
+    its location, if it's a known giver/turn-in for something. Learned
+    positions keep refining toward the most recently confirmed spot
+    rather than staying frozen at wherever they were first recorded
   - Available quest suggestions -- the arrow and map can also point
     you toward nearby quests you haven't picked up yet, not just
     what's already in your log. Filtered by level range, faction
     (a real bitwise check, not just whole-faction), actual completion
     history (checked against the server, not just this addon's own
-    records), reputation requirements, and known chain prerequisites
-    -- including "must complete ALL of these", "must complete ANY ONE
-    of these", "only available while a specific other quest is
-    active", and "mutually exclusive with a sibling quest" -- so it
-    tries hard not to suggest something you can't actually take yet.
-    Quests that need a specific item already in hand before they'll
-    even let you interact are also correctly held back until you
-    actually have it.
+    records), reputation requirements, PvP-flag requirements, and
+    known chain prerequisites -- including "must complete ALL of
+    these", "must complete ANY ONE of these", "only available while a
+    specific other quest is active", and "mutually exclusive with a
+    sibling quest" -- so it tries hard not to suggest something you
+    can't actually take yet. Quests that need a specific item already
+    in hand before they'll even let you interact are also correctly
+    held back until you actually have it. If you're already actively
+    pursuing a real, known objective, an unrelated available quest has
+    to be genuinely close by to interrupt that, not just marginally
+    closer by chance
+  - Class-restricted quests aren't suggested for pickup by default,
+    even for a matching class, since this server's custom class roster
+    means this addon can't reliably verify extra requirements those
+    quests often carry (toggle with /aql trackclassquests if you want
+    them suggested anyway)
+  - Handles quest IDs this server has repurposed for entirely
+    different custom content than the original vanilla quest that
+    number used to mean -- detected automatically by comparing your
+    live quest title against this addon's own bundled data, with a
+    manually-verified correction available for confirmed cases rather
+    than just losing all location data for them
+  - Quest item tooltip progress -- hover any quest-relevant item
+    anywhere (bags, the ground, a vendor) to see which quest needs it
+    and your current progress, color-coded by completion
+  - Announce quest accept/complete/abandon and kill/loot progress to
+    party/raid chat, independently toggleable, off by default
+  - Live, in-game summary of how much the shared database actually
+    knows so far -- shown automatically on login, or check anytime
   - Share what you've learned with other players -- live sync with
     party/raid/guild in real time, or /aql export and /aql import for
     trading your whole learned history with someone anytime, no
@@ -79,7 +113,8 @@ Key features:
     zone, shows a real hand-verified route (or points the arrow at an
     actual checkpoint, where a precise one is known) instead of a
     generic "fly or travel there"
-  - In-game quest tracker (can replace Blizzard's default one)
+  - In-game quest tracker (can replace Blizzard's default one), with
+    an optional position/size lock so it can't be accidentally dragged
   - Map and minimap nodes for quest givers and objectives
   - Route planner -- suggests an efficient order to tackle your
     active quests, clustering nearby quests together so you clear a
@@ -89,11 +124,6 @@ Key features:
   - Quest chain preview -- shows the next quest in a chain when one
     is known, right when you're about to turn something in
   - TomTom integration (optional, if you have TomTom installed)
-
-Note: this server runs a custom class roster different from vanilla/
-WotLK's standard nine classes, so class-restricted quests are NOT
-filtered out of Available Quest suggestions -- there's no reliable way
-to check that here.
 
 This addon is still a work in progress. Bugs and gaps in the location
 data are expected -- if you find one, /aql learn (see below) helps fix
@@ -112,9 +142,14 @@ install the addon, too.
  SLASH COMMANDS
 ----------------------------------------
 
+The essentials -- everything most people ever need:
+
 /aql
 /aql status
-    Prints a short status summary and this same command list in chat.
+    Prints a short status summary and the essential command list in
+    chat. /aql help all shows every command, including the more
+    advanced/rarely-needed ones -- most people will never need that
+    longer list.
 
 /aql guide
     Opens the in-game how-to-use guide.
@@ -122,6 +157,38 @@ install the addon, too.
 /aql config
     Opens the settings panel (also: /aqlconfig). Has quick-access
     buttons along the top for Guide, Route, Zone, and Chain.
+
+/aql learn [quest name]
+    Manually saves your current location as an objective (or turn-in,
+    if the quest is complete) location for that quest. With no name
+    given, uses whichever single quest is currently watched/tracked.
+    This is the main way bad or missing location data gets corrected.
+
+/aql missing
+    Report that a quest giver the arrow just sent you to genuinely
+    isn't there -- run it while standing on the spot. No addon can
+    check "does an NPC exist here" from a distance on this client, so
+    this is the only way that gap ever gets closed: it stops
+    suggesting that quest at that location.
+
+/aql sleep [questID]
+/aql wake [questID]
+    Pull an available (not-yet-picked-up) quest out of rotation
+    entirely, on every character on your account, until you wake it
+    back up. Useful for a quest you know is wrong or don't want
+    suggested right now.
+
+/aql sync
+    Check location-sharing status with party/raid/guild, and how many
+    locations you've received/applied this session.
+
+/aql export
+    Get a copyable text string of everything you've learned, to share
+    with another player running this addon.
+
+/aql import
+    Paste someone else's export string to add their learned locations
+    to yours. Never overwrites anything you already have.
 
 /aql route
     Suggests an order to tackle your active quests in your current
@@ -136,39 +203,34 @@ install the addon, too.
     Shows the next quest in the chain, if one is known. With no name
     given, uses your currently pinned quest.
 
-/aql learn [quest name]
-    Manually saves your current location as an objective (or turn-in,
-    if the quest is complete) location for that quest. With no name
-    given, uses whichever single quest is currently watched/tracked.
-    This is the main way bad or missing location data gets corrected.
+/aql tracker
+    Toggles this addon's own quest tracker panel on/off.
+
+/aql unpin
+    Clears a pinned quest, returning the arrow to auto-select mode.
+    (Alt+Right-Click a tracked quest does the same thing, and pins one
+    too.)
+
+----------------------------------------
+
+More settings and tools -- useful, but not needed day-to-day:
 
 /aql db
     Detailed breakdown of how much the shared learned database
     currently knows -- quest count, NPC count, etc.
 
-/aql sync
-    Check location-sharing status with party/raid/guild, and how many
-    locations you've received/applied this session.
+/aql learnedstats
+    Shows how much the shared learned database actually knows so far
+    (account-wide, every character on your account combined) -- quest
+    giver/turn-in locations, objectives with spawn data, total spawn
+    points.
 
-/aql export
-    Get a copyable text string of everything you've learned, to share
-    with another player running this addon.
-
-/aql import
-    Paste someone else's export string to add their learned locations
-    to yours. Never overwrites anything you already have.
-
-/aql opendb [questID]
-    Opens that quest's page on the Ascension Database in your browser
-    -- with a quest selected/open in your quest log, or a specific
-    quest ID typed directly (e.g. "/aql opendb 641"). Requires this
-    client's OpenAscensionDBURL function; not available everywhere.
-
-/aql resync
-    Force-reloads all learned locations and refreshes map nodes.
-
-/aql scan
-    Forces an immediate proximity scan for nearby quest givers.
+/aql floor up|down|clear
+    While standing on an unresolved pin (the arrow warns "coordinates
+    can't tell floors apart"), teach it which way the real target
+    actually is -- applies to that whole objective's spawn cluster
+    when it's an objective, not just the one pin. "clear" removes a
+    previously-given hint.
 
 /aql proximity
     Toggles automatic proximity-based objective learning on/off (on
@@ -179,36 +241,109 @@ install the addon, too.
     Toggles showing only what the arrow is currently tracking on the
     map/minimap, versus showing everything known nearby.
 
-/aql tracker
-    Toggles this addon's own quest tracker panel on/off.
-
 /aql blizztracker
     Toggles Blizzard's default quest tracker on/off.
 
 /aql map
     Forces an update of map nodes.
 
-/aql unpin
-    Clears a pinned quest, returning the arrow to auto-select mode.
-    (Alt+Right-Click a tracked quest does the same thing, and pins one
-    too.)
+/aql scan
+    Forces an immediate proximity scan for nearby quest givers.
 
 /aql tomtomauto
     Toggles automatically selecting the closest TomTom waypoint, if
     TomTom is installed.
 
+/aql opendb [questID]
+    Opens that quest's page on the Ascension Database in your browser
+    -- with a quest selected/open in your quest log, or a specific
+    quest ID typed directly (e.g. "/aql opendb 641"). Requires this
+    client's OpenAscensionDBURL function; not available everywhere.
+
+/aql announceparty
+    Toggles announcing quest accept/complete/abandon in party/raid
+    chat (off by default).
+
+/aql announcepartyprogress
+    Toggles announcing kill/loot progress (e.g. "4/8") in party/raid
+    chat (off by default, separate from the above).
+
+/aql questitemtooltip
+    Toggles showing quest progress on item tooltips, anywhere an item
+    tooltip shows up (on by default).
+
+/aql lock
+    Toggles locking the tracker's position/size so it can't be
+    accidentally dragged or resized (off by default).
+
+/aql availrange [number]
+    View or set how far the arrow will look for an available quest to
+    auto-suggest (default 20, smaller = only very nearby ones).
+
+/aql availrangeactive [number]
+    Same, but specifically while you already have a real active-quest
+    objective to head toward (default 5, tighter than the above -- an
+    available pickup only competes if genuinely close by).
+
+----------------------------------------
+
+Advanced / rarely needed -- most people will never touch these:
+
+/aql learnnotify
+    Toggles the automatic "Learned a new spawn point" chat
+    notification on/off (on by default).
+
+/aql learnedstatsauto
+    Toggles showing the /aql learnedstats summary automatically every
+    login/reload (on by default), so you can watch it grow as you play.
+
+/aql trackascension
+    Toggles whether Ascension's own custom-added quests (not part of
+    the original vanilla quest set) get suggested for pickup at all
+    (off by default).
+
+/aql trackclassquests
+    Toggles whether class-restricted quests get suggested for pickup
+    at all, even for a matching class (off by default -- see the note
+    on class restrictions above).
+
+/aql zonenudge
+    Toggles the one-time-per-zone nudge suggesting where to go next
+    once a zone's known quests are mostly done.
+
+/aql zonefilter
+    Toggles whether the tracker only shows quests from your current
+    zone, or everything across all zones.
+
+/aql pvprequired [clear]
+    Shows PvP-flag-required quests this addon has learned about from
+    the game's own error messages. "clear" resets the learned list.
+
+/aql reprequired [clear]
+    Same, for reputation-gated quests learned the same way.
+
+/aql unavailable [clear]
+    Shows quests this addon has learned are genuinely unavailable
+    (via /aql missing reports or in-game confirmation), so they stop
+    being suggested. "clear" resets the learned list.
+
+/aql respawntimers [clear]
+    Shows personally-learned respawn timers for creatures you've
+    killed and watched respawn. "clear" resets them, falling back to
+    vanilla-sourced defaults or a flat guess.
+
+/aql backfillids
+    One-time (re-runnable) pass tagging NPC identity onto previously-
+    learned spawn points where the source is unambiguous, so they can
+    be individually hidden on kill the same way freshly-learned ones
+    already are.
+
+/aql resync
+    Force-reloads all learned locations and refreshes map nodes.
+
 /aql gossip
     Reprocesses the currently open gossip window (rarely needed
     manually -- mostly automatic).
-
-/aql arrow
-    Diagnostic -- explains exactly why the navigation arrow is or
-    isn't showing right now, and what the addon currently knows about
-    your active quests.
-
-/aql questitems
-    Diagnostic for the quest item button panel -- shows what's
-    currently detected and why a button might not be appearing.
 
 /aql calibrate [reset]
     Shows minimap-scale calibration progress for the starting-zone
@@ -222,10 +357,38 @@ install the addon, too.
     measured value always takes over once it's ready. "/aql calibrate
     reset" re-measures your current zone if needed.
 
+----------------------------------------
+
+Diagnostic / troubleshooting -- not needed for normal play:
+
+/aql arrow
+    Explains exactly why the navigation arrow is or isn't showing
+    right now, and what the addon currently knows about your active
+    quests.
+
+/aql why [questID]
+    Full gating breakdown for why an available quest is or isn't being
+    suggested for pickup (prerequisites, exclusion groups, completion
+    history, etc.), with a quest selected/open in your quest log, or a
+    specific quest ID typed directly.
+
+/aql questitems
+    Diagnostic for the quest item button panel -- shows what's
+    currently detected and why a button might not be appearing.
+
 /aql debug
     Prints general diagnostic info.
 
-Troubleshooting tools (not needed for normal play):
+/aql debuglog
+    Toggles internal diagnostic logging to chat (off by default).
+
+/aql killdebug
+    Toggles kill-tracking debug -- every kill prints what NPC ID was
+    parsed and whether a matching map node was found/hidden.
+
+/aql clusterdebug
+    Toggles a visual debug overlay on the world map for cluster
+    merging.
 
 /aql flickerdebug
     Records for 5 seconds and reports exactly how many times various
@@ -239,9 +402,34 @@ Troubleshooting tools (not needed for normal play):
     Records for 10 seconds and reports real measured time spent in
     the functions most likely to affect FPS.
 
+----------------------------------------
+
 Mouse actions:
   Alt+Right-Click a tracked quest  - pin/unpin the arrow to that quest
   Alt+Click a tracked quest        - set a TomTom waypoint (if enabled)
+
+----------------------------------------
+ TIP: PUT /aql learn, /aql missing, AND /aql sleep ON A KEYBIND
+----------------------------------------
+
+These three only actually help if you use them the moment you notice
+something wrong -- and typing a full command out while standing on
+the spot is exactly the kind of friction that makes people just shrug
+and move on instead of fixing it. Turning each into a one-key macro
+removes that friction:
+
+1. Type /macro (or Game Menu -> Macros) to open the Macros window.
+2. Click New, give it any name and icon.
+3. Type one command as the entire body, e.g. just:
+       /aql learn
+   on its own line.
+4. Drag the macro onto an action bar, then bind a key to it (Game
+   Menu -> Key Bindings, or Shift-drag it directly onto the bar).
+
+Repeat for /aql missing and /aql sleep as their own separate
+macros/keys. Once bound, correcting bad data on the spot is a single
+keypress -- and since the data is shared, every correction helps
+everyone else using this addon too, not just you.
 
 ----------------------------------------
 
