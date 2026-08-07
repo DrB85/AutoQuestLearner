@@ -2,10 +2,9 @@
  AutoQuestLearner
 ========================================
 
-This is a STANDALONE addon. You do NOT need pfQuest, Questie-X, or
-TomTom installed or enabled for this to work -- it's fully self-
-contained on its own. If you happen to have TomTom installed too, it
-can optionally use it; if not, everything still works without it.
+This is a STANDALONE addon. You do NOT need pfQuest or Questie-X
+installed or enabled for this to work -- it's fully self-contained
+on its own.
 
 Author: Ezinagro
 
@@ -123,7 +122,6 @@ Key features:
     finished in your current zone
   - Quest chain preview -- shows the next quest in a chain when one
     is known, right when you're about to turn something in
-  - TomTom integration (optional, if you have TomTom installed)
 
 This addon is still a work in progress. Bugs and gaps in the location
 data are expected -- if you find one, /aql learn (see below) helps fix
@@ -249,10 +247,6 @@ More settings and tools -- useful, but not needed day-to-day:
 
 /aql scan
     Forces an immediate proximity scan for nearby quest givers.
-
-/aql tomtomauto
-    Toggles automatically selecting the closest TomTom waypoint, if
-    TomTom is installed.
 
 /aql opendb [questID]
     Opens that quest's page on the Ascension Database in your browser
@@ -406,7 +400,6 @@ Diagnostic / troubleshooting -- not needed for normal play:
 
 Mouse actions:
   Alt+Right-Click a tracked quest  - pin/unpin the arrow to that quest
-  Alt+Click a tracked quest        - set a TomTom waypoint (if enabled)
 
 ----------------------------------------
  TIP: PUT /aql learn, /aql missing, AND /aql sleep ON A KEYBIND

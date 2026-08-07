@@ -412,7 +412,7 @@
       <a class="btn btn-primary" href="downloads/AutoQuestLearner.zip">&#8681; Download</a>
       <a class="btn btn-ghost" href="#install">Installation guide</a>
     </div>
-    <p class="version-note">No pfQuest, Questie, or TomTom required &mdash; fully self-contained.</p>
+    <p class="version-note">No pfQuest or Questie required &mdash; fully self-contained.</p>
 
     <img class="arrow-cue" src="assets/img/arrow.png" alt="">
   </div>
@@ -529,14 +529,8 @@
         <p>Both factions are fully supported, with the same learning database shared underneath.</p>
       </div>
 
-      <div class="card">
-        <img class="card-icon" src="assets/img/route.png" alt="">
-        <h3>Optional TomTom integration</h3>
-        <p>If TomTom is installed, waypoints can be set automatically. If it isn't, everything still works without it.</p>
-      </div>
-
     </div>
-    <p class="version-note" style="text-align:center; margin-top:32px;">Note: this server runs a custom class roster different from vanilla/WotLK's standard nine classes, so class-restricted quests are not filtered out of Available Quest suggestions &mdash; there's no reliable way to check that here.</p>
+    <p class="version-note" style="text-align:center; margin-top:32px;">Note: class-restricted quests aren't suggested for pickup by default, even for a matching class, since this server's custom class roster means extra requirements those quests often carry can't be reliably verified.</p>
   </div>
 </section>
 
@@ -578,7 +572,6 @@
         <div class="cmd-row"><div class="cmd">/aql blizztracker</div><div class="cmd-desc">Toggles Blizzard's default quest tracker.</div></div>
         <div class="cmd-row"><div class="cmd">/aql map</div><div class="cmd-desc">Forces an update of map nodes.</div></div>
         <div class="cmd-row"><div class="cmd">/aql scan</div><div class="cmd-desc">Forces an immediate proximity scan for nearby quest givers.</div></div>
-        <div class="cmd-row"><div class="cmd">/aql tomtomauto</div><div class="cmd-desc">Toggles auto-selecting the closest TomTom waypoint, if TomTom is installed.</div></div>
         <div class="cmd-row"><div class="cmd">/aql opendb [questID]</div><div class="cmd-desc">Opens that quest on the Ascension Database in your browser.</div></div>
         <div class="cmd-row"><div class="cmd">/aql announceparty</div><div class="cmd-desc">Toggles announcing quest accept/complete/abandon in party/raid chat (off by default).</div></div>
         <div class="cmd-row"><div class="cmd">/aql announcepartyprogress</div><div class="cmd-desc">Toggles announcing kill/loot progress (e.g. "4/8") in party/raid chat (off by default, separate from the above).</div></div>
@@ -622,7 +615,6 @@
       <div class="book-group">
         <div class="book-group-title">Mouse actions</div>
         <div class="cmd-row"><div class="cmd">Alt + Right-Click a tracked quest</div><div class="cmd-desc">Pin or unpin the arrow to that quest.</div></div>
-        <div class="cmd-row"><div class="cmd">Alt + Click a tracked quest</div><div class="cmd-desc">Set a TomTom waypoint, if TomTom is enabled.</div></div>
       </div>
     </div>
   </div>
