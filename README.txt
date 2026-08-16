@@ -54,6 +54,23 @@ complete over time as more of it gets played through.
 
 Alliance and Horde are both supported.
 
+Quest titles, descriptions, objectives, NPC names, and zone names are
+also available in German, French, Korean, Portuguese, Russian, Spanish
+(both regional variants), and Chinese (both Simplified and
+Traditional) -- automatically matched to your client's own language,
+with graceful fallback to English for anything a given language's data
+doesn't cover yet. The addon's own interface text (command output,
+tooltips, notifications) is still English-only for now.
+
+If the arrow has genuinely nothing to go on for a specific quest --
+not in the bundled data, nothing learned yet by anyone -- it says so
+plainly for a confirmed small set of these cases instead of silently
+going blank, and explains that finding it in-game teaches the addon
+(and every other player) its location automatically. This doesn't
+change how learning works at all; it's the same automatic process as
+everything else this addon learns, just with a clearer explanation
+while the gap still exists.
+
 Key features:
   - Built-in smart arrow -- points you toward your next quest
     objective or turn-in without needing a separate addon, and now
@@ -114,7 +131,13 @@ Key features:
     generic "fly or travel there"
   - In-game quest tracker (can replace Blizzard's default one), with
     an optional position/size lock so it can't be accidentally dragged
-  - Map and minimap nodes for quest givers and objectives
+  - Map and minimap nodes for quest givers and objectives -- kill/loot
+    objective spawn areas can optionally show as a shaded area instead
+    of a dot cluster (Outline Spawn Areas, off by default, in
+    /aql config) for whichever quest the arrow is currently tracking.
+    Gathering nodes (herbs, ore, etc.) always keep precise individual
+    dots regardless of this setting, since a fixed resource node isn't
+    the same thing as a wandering creature's general hunting ground
   - Route planner -- suggests an efficient order to tackle your
     active quests, clustering nearby quests together so you clear a
     whole area before backtracking
@@ -200,6 +223,13 @@ The essentials -- everything most people ever need:
 /aql chain [quest name]
     Shows the next quest in the chain, if one is known. With no name
     given, uses your currently pinned quest.
+
+/aql suggestzone
+    Suggests which zone(s) to level in next, based on your level,
+    race, and faction, following the same zone progression established
+    Classic leveling guides use (not just raw known-quest counts) --
+    with known-location quest coverage shown alongside each suggestion
+    so you can see how well-mapped that zone actually is.
 
 /aql tracker
     Toggles this addon's own quest tracker panel on/off.

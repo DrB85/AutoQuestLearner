@@ -524,6 +524,18 @@
       </div>
 
       <div class="card">
+        <img class="card-icon" src="assets/img/tracker_database.png" alt="">
+        <h3>Multi-language quest data</h3>
+        <p>Quest titles, descriptions, objectives, NPC names, and zone names are available in German, French, Korean, Portuguese, Russian, Spanish, and Chinese, matched automatically to your client's own language &mdash; with a graceful fallback to English wherever a given language's data doesn't cover something yet.</p>
+      </div>
+
+      <div class="card">
+        <img class="card-icon" src="assets/img/node.png" alt="">
+        <h3>Outline spawn areas</h3>
+        <p>Optional map display mode: kill-objective hunting grounds for your currently tracked quest can show as a shaded area instead of a dot cluster. Gathering nodes (herbs, ore, etc.) always keep precise individual pins, since those are fixed spots, not a wandering creature's general territory.</p>
+      </div>
+
+      <div class="card">
         <img class="card-icon" src="assets/img/icon_alliance.png" alt="">
         <h3>Alliance &amp; Horde</h3>
         <p>Both factions are fully supported, with the same learning database shared underneath.</p>
@@ -558,6 +570,7 @@
         <div class="cmd-row"><div class="cmd">/aql route</div><div class="cmd-desc">Suggests an order to tackle your active quests, clustering nearby ones together.</div></div>
         <div class="cmd-row"><div class="cmd">/aql zone</div><div class="cmd-desc">Shows how many known quests you've completed in your current zone.</div></div>
         <div class="cmd-row"><div class="cmd">/aql chain [quest name]</div><div class="cmd-desc">Shows the next quest in the chain. Uses your pinned quest if no name is given.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql suggestzone</div><div class="cmd-desc">Suggests which zone to level in next, based on your level, race, and faction &mdash; following the same progression established Classic leveling guides use.</div></div>
         <div class="cmd-row"><div class="cmd">/aql tracker</div><div class="cmd-desc">Toggles this addon's own quest tracker panel.</div></div>
         <div class="cmd-row"><div class="cmd">/aql unpin</div><div class="cmd-desc">Clears a pinned quest, returning the arrow to auto-select. Alt+Right-Click does the same.</div></div>
       </div>
@@ -653,6 +666,21 @@
 
     <!-- Add a new .change-entry block at the TOP of this list each time you publish an update. -->
     <div class="changelog">
+
+      <div class="change-entry">
+        <div class="change-head">
+          <span class="change-date">August 16, 2026</span>
+        </div>
+        <ul>
+          <li>Fixed a real, measured stutter: the available-quest-givers scan was walking the entire 6,600+ quest database on every quest-progress event (confirmed via <span class="mono">/aql perfdebug</span>: ~35ms per call). Now scoped to just your current zone &mdash; roughly 20x faster. The same fix was applied to the zone-completion nudge, which turned out to be silently doing the exact same full-database walk every 30 seconds.</li>
+          <li>Capped item-collection objective source lookups &mdash; a common drop item with 100+ possible sources (like cloth scraps) could fan out to thousands of coordinate checks for a single objective. Now capped at 15 sources.</li>
+          <li><span class="mono">/aql suggestzone</span> now follows the same zone-by-level progression established Classic leveling guides use (race/faction-aware for starting zones), instead of ranking purely by known-quest count.</li>
+          <li>New optional map display mode, <b>Outline Spawn Areas</b>: kill-objective hunting grounds for your currently tracked quest can show as a shaded area instead of a dot cluster. Gathering nodes always keep precise pins, since a fixed resource node isn't the same thing as a wandering creature's general territory.</li>
+          <li>Fixed a real cross-character bug: a brand-new character's first encounter with an already-known NPC was incorrectly re-triggering a "Learned new location!" announcement and a redundant rewrite &mdash; the "already known" check was scoped to the current character instead of the shared account-wide database. Navigation itself was never actually broken by this, but it made the shared database look like it wasn't working. Fixing it also means a later, more accurate sighting can now correct an earlier rough one, instead of that character being permanently locked out of ever refining it.</li>
+          <li>Quest titles, descriptions, objectives, NPC names, and zone names are now available in German, French, Korean, Portuguese, Russian, Spanish, and Chinese, matched automatically to your client's language, with a graceful fallback to English for anything not yet covered.</li>
+          <li>The arrow now explains itself for a confirmed small set of quests with genuinely zero location data anywhere, instead of silently going blank &mdash; and notes that finding it in-game teaches the addon (and everyone else) automatically, same as anything else it learns.</li>
+        </ul>
+      </div>
 
       <div class="change-entry">
         <div class="change-head">
