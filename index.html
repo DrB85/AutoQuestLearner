@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AutoQuestLearner &mdash; a standalone quest addon that learns as you play</title>
 <meta name="description" content="AutoQuestLearner is a standalone WoW quest addon with a smart arrow, a learning location database, quest tracker, and map integration. No pfQuest or Questie required.">
-<link rel="icon" type="image/png" href="assets/img/logo.png">
+<link rel="icon" type="image/png" href="assets/img/favicon_aql.png">
+<link rel="apple-touch-icon" href="assets/img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -666,6 +667,21 @@
 
     <!-- Add a new .change-entry block at the TOP of this list each time you publish an update. -->
     <div class="changelog">
+
+      <div class="change-entry">
+        <div class="change-head">
+          <span class="change-version">Update</span>
+          <span class="change-date">August 22, 2026</span>
+        </div>
+        <ul>
+          <li><b>Minimap button</b> &mdash; left-click opens settings, right-click quick menu (settings / tracker / guide / scan / hide), Shift-drag to move. Toggle with <span class="mono">/aql minimap</span>. Uses the new <b>AQL</b> badge icon.</li>
+          <li><b>Permanent account-wide learning</b> for quest givers and turn-ins: the first learned spot is kept for every character; passive gossip/event/proximity no longer overwrites it. Only an explicit <span class="mono">/aql learn</span> (or <span class="mono">/aql learn giver</span> / <span class="mono">turnin</span>) can replace a saved position.</li>
+          <li><span class="mono">/aql learn giver</span> and <span class="mono">/aql learn turnin</span> force-lock NPC coordinates at your feet (optional quest-name filter).</li>
+          <li>Map is snapped to your current zone before learning so coords are not saved under the wrong map; the arrow refreshes immediately after a force-learn.</li>
+          <li>Hardened spawn-area convex hull outlines (dedupe near-duplicate points, safer collinear/degenerate cases).</li>
+          <li>New <b>AQL</b> logo artwork for the addon minimap button and the project site.</li>
+        </ul>
+      </div>
 
       <div class="change-entry">
         <div class="change-head">
