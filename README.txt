@@ -86,7 +86,9 @@ Key features:
     rather than staying frozen at wherever they were first recorded
   - Available quest suggestions -- the arrow and map can also point
     you toward nearby quests you haven't picked up yet, not just
-    what's already in your log. Filtered by level range, faction
+    what's already in your log. While your log still has quests,
+    the arrow prioritizes objectives/turn-ins only (no lock on the
+    giver or random targeted NPC at Distance 0.0). Filtered by level range, faction
     (a real bitwise check, not just whole-faction), actual completion
     history (checked against the server, not just this addon's own
     records), reputation requirements, PvP-flag requirements, and
@@ -455,6 +457,49 @@ keypress -- and since the data is shared, every correction helps
 everyone else using this addon too, not just you.
 
 ----------------------------------------
+
+
+----------------------------------------
+ CHANGELOG (August 28, 2026)
+----------------------------------------
+
+Arrow / navigation
+  - Fixed the arrow locking onto any targeted NPC (vendors, trainers,
+    books, quest givers) as "(available)" at Distance 0.0 until you
+    walked out of range. Available targets now only come from the
+    real quest-giver database, not from your current target.
+  - While your quest log has any quests, the arrow no longer suggests
+    available pickups -- it stays on objectives and turn-ins. Available
+    suggestions return when the log is empty.
+  - Fixed a math bug where "skip available" still matched nearby givers
+    (maxRange -1 squared to 1). Available is fully skipped when the log
+    has work.
+  - TomTom-style clear on accept and quest-log change: drop the old
+    waypoint, refresh the log, retarget immediately -- works with other
+    auto-accept addons that never fire QUEST_ACCEPTED for us.
+  - On accept, ClearTarget() so the arrow is not glued to the NPC.
+  - Session arrow/available cache purged on login (no cross-character
+    leftovers).
+  - Faster retarget after accept/turn-in; force path runs near-instantly.
+
+Minimap / starting zones
+  - Coldridge Valley (and other starting sub-zones) no longer use the
+    parent zone's yard size for minimap scale -- that caused clusters to
+    crawl as you walked.
+  - Auto minimap-scale calibration kicks on login and zone change so
+    starting areas remeasure in the background.
+
+Map / tracker
+  - Same-coord cluster dedupe: Ascension + pfQuest + learned pins at the
+    same spot collapse to one ring instead of stacked rings.
+  - Tracker objectives show a colored dot matching the minimap ring
+    color for that objective, so you can match tracker lines to map
+    nodes at a glance.
+
+Performance
+  - Coalesced map/tracker rebuilds on kill, loot, accept, turn-in, and
+    zone change to cut FPS stutters.
+  - Throttled available-giver cache, minimap updates, and route dots.
 
 Thanks for testing -- feedback on anything broken, missing, or
 confusing is always welcome.
