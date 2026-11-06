@@ -434,6 +434,12 @@
       </div>
 
       <div class="card">
+        <img class="card-icon" src="assets/img/available.png" alt="">
+        <h3>Conquest of AzerothCore database</h3>
+        <p>Bundles the Conquest of AzerothCore server's own quest, NPC, object and item data (from coa-development.org). Turn on <b>Conquest of AzerothCore database</b> under Questing and the addon uses that server's real quest list, givers, turn-ins and NPC positions, and stops suggesting quests that start from an item or don't exist there.</p>
+      </div>
+
+      <div class="card">
         <img class="card-icon" src="assets/img/node.png" alt="">
         <h3>Learns as you play</h3>
         <p>Quest giver, turn-in, and objective locations are saved to a shared learned database, filling gaps in the bundled data over time.</p>
@@ -572,6 +578,8 @@
         <div class="cmd-row"><div class="cmd">/aql chain [quest name]</div><div class="cmd-desc">Shows the next quest in the chain. Uses your pinned quest if no name is given.</div></div>
         <div class="cmd-row"><div class="cmd">/aql suggestzone</div><div class="cmd-desc">Suggests which zone to level in next, based on your level, race, and faction &mdash; following the same progression established Classic leveling guides use.</div></div>
         <div class="cmd-row"><div class="cmd">/aql tracker</div><div class="cmd-desc">Toggles this addon's own quest tracker panel.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql coa [on|off|auto]</div><div class="cmd-desc">Turns the Conquest of AzerothCore database on or off (also a checkbox under Questing). Auto turns it on when the realm name looks like Conquest of AzerothCore. Needs a /reload.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql arrow on|off|toggle</div><div class="cmd-desc">Shows or hides the navigation arrow. Also a checkbox in the settings.</div></div>
         <div class="cmd-row"><div class="cmd">/aql unpin</div><div class="cmd-desc">Clears a pinned quest, returning the arrow to auto-select. Alt+Right-Click does the same.</div></div>
       </div>
 
@@ -615,6 +623,9 @@
       <details class="book-group book-group-collapsible">
         <summary>Diagnostics &amp; troubleshooting</summary>
         <div class="cmd-row"><div class="cmd">/aql arrow</div><div class="cmd-desc">Explains exactly why the navigation arrow is or isn't showing right now.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql turnin [questID]</div><div class="cmd-desc">Shows every source that voted on where a ready quest should be turned in, which one won, and why.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql pickup &lt;questID&gt;</div><div class="cmd-desc">Shows whether a quest is flagged as item-started or not on the Conquest of AzerothCore server, what pin it has, and whether it's in the available list.</div></div>
+        <div class="cmd-row"><div class="cmd">/aql thin &lt;yards&gt;</div><div class="cmd-desc">Merges objective pins from the same quest and creature closer than this distance (default 25). 0 draws every spawn point.</div></div>
         <div class="cmd-row"><div class="cmd">/aql why [questID]</div><div class="cmd-desc">Explains exactly why a quest is or isn't currently showing as available.</div></div>
         <div class="cmd-row"><div class="cmd">/aql questitems</div><div class="cmd-desc">Diagnostic for the quest item button panel.</div></div>
         <div class="cmd-row"><div class="cmd">/aql debug</div><div class="cmd-desc">Prints general diagnostic info.</div></div>
@@ -647,7 +658,7 @@
         <p>Copy the <code>AutoQuestLearner</code> folder into your <code>Interface\AddOns\</code> folder, so the path ends in <code>...\AddOns\AutoQuestLearner\AutoQuestLearner.toc</code>.</p>
       </div>
       <div class="step">
-        <p>Fully restart the game client the first time &mdash; a <code>/reload</code> isn't enough on first install.</p>
+        <p>Fully restart the game client the first time <b>and after every update</b> &mdash; a <code>/reload</code> doesn't load new addon files.</p>
       </div>
       <div class="step">
         <p>Check that it's enabled in your AddOns list at the character select screen, then run <code>/aql guide</code> in-game any time.</p>
@@ -666,6 +677,25 @@
 
     <!-- Add a new .change-entry block at the TOP of this list each time you publish an update. -->
     <div class="changelog">
+
+      <div class="change-entry">
+        <div class="change-head">
+          <span class="change-version">Conquest of AzerothCore</span>
+          <span class="change-date">November 6, 2026</span>
+        </div>
+        <ul>
+          <li><b>Conquest of AzerothCore database.</b> New bundled data from coa-development.org: 665 quests we didn't have, about 1,500 NPC names, 126 object names and 988 item names with drop sources.</li>
+          <li><b>Conquest of AzerothCore mode</b> &mdash; a checkbox under <b>Questing</b> (or <span class="mono">/aql coa on|off|auto</span>). When on, only quests that exist on that server are suggested, with that server's own givers, turn-ins and NPC positions. It takes priority over &ldquo;Only Ascension DB quests&rdquo;. Auto turns on when the realm name looks like Conquest of AzerothCore.</li>
+          <li><b>Item-started quests are no longer suggested as pickups.</b> 363 quests the site lists as started by an item (a drop, letter, etc.) no longer get an &ldquo;available&rdquo; arrow or map pin, which fixes arrows pointing at an NPC who doesn't give the quest.</li>
+          <li><b>Turn-in arrow uses every database.</b> Learned pins, NPC tables, the community seed and guide coordinates all vote on where a quest is turned in, and the spot most sources agree on wins. <span class="mono">/aql turnin</span> shows every vote.</li>
+          <li>A saved turn-in pin that sits on the quest's own objective spawns, or is on a different map than the giver when the same NPC gives and takes the quest, is now ignored. Fixes custom quests whose turn-in pointed into the objective cave.</li>
+          <li>Ready-to-turn-in quests no longer override the objectives you're closest to.</li>
+          <li>Starting-area fixes: quests from other zones no longer show as available in Valley of Trials, Camp Narache, Shadowglen, Coldridge Valley and Deathknell.</li>
+          <li>Minimap objective clusters no longer pile up: pins from the same quest and creature closer than 25 yards are drawn once (<span class="mono">/aql thin &lt;yards&gt;</span> to change, 0 for every spawn point). Learned spawn pins that duplicate the database are no longer stacked on top of it.</li>
+          <li>New <span class="mono">/aql arrow on|off|toggle</span>, <span class="mono">/aql turnin</span> and <span class="mono">/aql pickup</span> commands.</li>
+          <li><b>Update note:</b> this release adds new data files, so fully restart the game client &mdash; <span class="mono">/reload</span> won't load them.</li>
+        </ul>
+      </div>
 
       <div class="change-entry">
         <div class="change-head">
