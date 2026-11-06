@@ -414,7 +414,7 @@
     </div>
     <p class="version-note">No pfQuest or Questie required &mdash; fully self-contained.</p>
 
-    <img class="arrow-cue" src="assets/img/arrow.png" alt="">
+    <svg class="arrow-cue" viewBox="0 0 64 64" role="img" aria-label="Navigation arrow"><defs><linearGradient id="ag1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9be35f"/><stop offset="1" stop-color="#3f8f2a"/></linearGradient></defs><path d="M32 4 L58 36 H42 V60 H22 V36 H6 Z" fill="url(#ag1)" stroke="#16280f" stroke-width="3" stroke-linejoin="round" transform="rotate(180 32 32)"/></svg>
   </div>
 </header>
 
@@ -428,7 +428,7 @@
     <div class="grid">
 
       <div class="card">
-        <img class="card-icon" src="assets/img/arrow.png" alt="">
+        <svg class="card-icon" viewBox="0 0 64 64" role="img" aria-label="Navigation arrow"><defs><linearGradient id="ag2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9be35f"/><stop offset="1" stop-color="#3f8f2a"/></linearGradient></defs><path d="M32 4 L58 36 H42 V60 H22 V36 H6 Z" fill="url(#ag2)" stroke="#16280f" stroke-width="3" stroke-linejoin="round"/></svg>
         <h3>Smart navigation arrow</h3>
         <p>Points you toward your next quest objective or turn-in automatically &mdash; no separate addon needed to know which way to walk.</p>
       </div>
@@ -527,12 +527,6 @@
         <img class="card-icon" src="assets/img/tracker_giver.png" alt="">
         <h3>Quest chain preview</h3>
         <p>Shows the next quest in a chain, when one is known, right as you're about to turn something in.</p>
-      </div>
-
-      <div class="card">
-        <img class="card-icon" src="assets/img/tracker_database.png" alt="">
-        <h3>Multi-language quest data</h3>
-        <p>Quest titles, descriptions, objectives, NPC names, and zone names are available in German, French, Korean, Portuguese, Russian, Spanish, and Chinese, matched automatically to your client's own language &mdash; with a graceful fallback to English wherever a given language's data doesn't cover something yet.</p>
       </div>
 
       <div class="card">
@@ -687,6 +681,7 @@
           <li><b>Conquest of AzerothCore database.</b> New bundled data from coa-development.org: 665 quests we didn't have, about 1,500 NPC names, 126 object names and 988 item names with drop sources.</li>
           <li><b>Conquest of AzerothCore mode</b> &mdash; a checkbox under <b>Questing</b> (or <span class="mono">/aql coa on|off|auto</span>). When on, only quests that exist on that server are suggested, with that server's own givers, turn-ins and NPC positions. It takes priority over &ldquo;Only Ascension DB quests&rdquo;. Auto turns on when the realm name looks like Conquest of AzerothCore.</li>
           <li><b>Item-started quests are no longer suggested as pickups.</b> 363 quests the site lists as started by an item (a drop, letter, etc.) no longer get an &ldquo;available&rdquo; arrow or map pin, which fixes arrows pointing at an NPC who doesn't give the quest.</li>
+          <li><b>Quests started by a dropped item now point at the creature that drops it.</b> For 155 of those quests the arrow says &ldquo;Kill &lt;creature&gt; for &lt;item&gt; to start this quest&rdquo; (for example Scarlet Correspondence: kill Alric Sading for the Scarlet Letter).</li>
           <li><b>Turn-in arrow uses every database.</b> Learned pins, NPC tables, the community seed and guide coordinates all vote on where a quest is turned in, and the spot most sources agree on wins. <span class="mono">/aql turnin</span> shows every vote.</li>
           <li>A saved turn-in pin that sits on the quest's own objective spawns, or is on a different map than the giver when the same NPC gives and takes the quest, is now ignored. Fixes custom quests whose turn-in pointed into the objective cave.</li>
           <li>Ready-to-turn-in quests no longer override the objectives you're closest to.</li>
@@ -726,7 +721,6 @@
           <li><span class="mono">/aql suggestzone</span> now follows the same zone-by-level progression established Classic leveling guides use (race/faction-aware for starting zones), instead of ranking purely by known-quest count.</li>
           <li>New optional map display mode, <b>Outline Spawn Areas</b>: kill-objective hunting grounds for your currently tracked quest can show as a shaded area instead of a dot cluster. Gathering nodes always keep precise pins, since a fixed resource node isn't the same thing as a wandering creature's general territory.</li>
           <li>Fixed a real cross-character bug: a brand-new character's first encounter with an already-known NPC was incorrectly re-triggering a "Learned new location!" announcement and a redundant rewrite &mdash; the "already known" check was scoped to the current character instead of the shared account-wide database. Navigation itself was never actually broken by this, but it made the shared database look like it wasn't working. Fixing it also means a later, more accurate sighting can now correct an earlier rough one, instead of that character being permanently locked out of ever refining it.</li>
-          <li>Quest titles, descriptions, objectives, NPC names, and zone names are now available in German, French, Korean, Portuguese, Russian, Spanish, and Chinese, matched automatically to your client's language, with a graceful fallback to English for anything not yet covered.</li>
           <li>The arrow now explains itself for a confirmed small set of quests with genuinely zero location data anywhere, instead of silently going blank &mdash; and notes that finding it in-game teaches the addon (and everyone else) automatically, same as anything else it learns.</li>
         </ul>
       </div>
@@ -791,7 +785,7 @@
 </section>
 
 <footer>
-  <div class="divider-arrow"><img src="assets/img/arrow.png" alt=""></div>
+  <div class="divider-arrow"><svg width="20" height="20" style="opacity:.4" viewBox="0 0 64 64" role="img" aria-label="Navigation arrow"><defs><linearGradient id="ag3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9be35f"/><stop offset="1" stop-color="#3f8f2a"/></linearGradient></defs><path d="M32 4 L58 36 H42 V60 H22 V36 H6 Z" fill="url(#ag3)" stroke="#16280f" stroke-width="3" stroke-linejoin="round" transform="rotate(180 32 32)"/></svg></div>
   <a class="support-btn" href="https://cash.app/$Drbbatman" target="_blank" rel="noopener">&#9749; Support Development &mdash; $Drbbatman</a>
   <p class="mono">AutoQuestLearner &middot; Author: Ezinagro &middot; <a href="mailto:Ezinagro1985@gmail.com">Ezinagro1985@gmail.com</a></p>
   <p class="mono">Feedback on anything broken, missing, or confusing is always welcome.</p>
