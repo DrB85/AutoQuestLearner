@@ -503,7 +503,7 @@ Learned quest-item drop rates
     /aqldrops reset clears them. Follows the "drop rate in tooltips" setting.
 
 Conquest of AzerothCore
-  - New bundled data from coa-development.org: 665 quests we didn't
+  - New bundled data from coa-development.org: 667 quests we didn't
     have, about 1,500 NPC names, 126 object names and 988 item names
     with drop sources.
   - Conquest of AzerothCore mode (Questing checkbox, or /aql coa
