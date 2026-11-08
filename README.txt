@@ -507,6 +507,10 @@ Conquest of AzerothCore
   - Item-started quests are no longer suggested as pickups. 363 quests
     the site lists as started by an item (a drop, letter, etc.) no
     longer get an "available" arrow or map pin.
+  - For 155 of those, the arrow now points at the creature that drops
+    the starter item: "Kill <creature> for <item> to start this quest"
+    (e.g. Scarlet Correspondence: kill Alric Sading for the Scarlet
+    Letter).
 
 Arrow / navigation
   - Turn-in arrow now uses every database: learned pins, NPC tables,
@@ -528,6 +532,9 @@ Minimap
     creature closer than 25 yards are drawn once (/aql thin <yards>).
     Learned spawn pins that duplicate the database are no longer
     stacked on top of it.
+  - Available quests on the world map: a yellow ! for each quest giver
+    you can pick up in your current zone. Toggle it with "Show
+    Available Quests (!) on the World Map" under Questing.
 
 Update note: this release adds new data files, so fully restart the
 game client -- /reload will not load them.
