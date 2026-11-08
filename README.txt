@@ -496,6 +496,12 @@ everyone else using this addon too, not just you.
  CHANGELOG (November 6, 2026)
 ----------------------------------------
 
+Learned quest-item drop rates
+  - Loot a mob while you still need a quest item and the addon counts how often
+    it drops. Hover that kind of mob later to see the rate (learned x/y, or the
+    database rate if nothing is learned yet). /aqldrops shows totals,
+    /aqldrops reset clears them. Follows the "drop rate in tooltips" setting.
+
 Conquest of AzerothCore
   - New bundled data from coa-development.org: 665 quests we didn't
     have, about 1,500 NPC names, 126 object names and 988 item names
