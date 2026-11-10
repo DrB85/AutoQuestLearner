@@ -674,6 +674,20 @@
 
       <div class="change-entry">
         <div class="change-head">
+          <span class="change-version">Map markers &amp; CoA defaults</span>
+          <span class="change-date">November 9, 2026</span>
+        </div>
+        <ul>
+          <li><b>World-map ! and ? stay put.</b> The yellow ! (available) and ? (ready to turn in) are drawn by their own Questie-style marker module and redrawn on every map change, zoom, zone change and quest-log update, so they no longer vanish after the map is closed or changed. Continent and world views show none. The map builds its own giver list, so flagging a quest no longer empties the pins.</li>
+          <li><b>Givers that don't have the quest clear themselves.</b> If an NPC&rsquo;s window doesn&rsquo;t offer an expected quest (now also for coordinate-only givers from the community seed), the quest is flagged and the arrow moves on. Targeting a friendly giver at its spot with no window opening within 3 seconds, or standing at an &ldquo;(available)&rdquo; spot for 12 seconds, flags it too. <span class="mono">/aql unavailable clear &lt;questID&gt;</span> undoes it.</li>
+          <li><b>World map shows every quest your level allows.</b> The ! lists every quest whose required level you meet (grey ones too, like Questie). Conquest of AzerothCore level requirements are now bundled (10,600+ quests) and its starting-area NPCs (Deathknell, Shadowglen, Coldridge Valley, Valley of Trials, Camp Narache) are placed on their own maps, adding about 700 quests with a giver location. 254 quests still have none because the site has no coordinates for their script-spawned NPCs; they appear once you learn the spot. Northshire, Ammen Vale and Sunstrider Isle have no map in the addon yet. CLUCK! (a /chicken emote quest) no longer gets pins or an arrow.</li>
+          <li><b>Conquest of AzerothCore is the default.</b> On first login (and once for existing installs that never chose), CoA mode is on and the Ascension community starter data, TBC and Wotlk data are off. Anyone can switch them on later.</li>
+          <li><b>New toggle: Use Community Starter Data (Ascension seed)</b> under Questing. Off removes seeded entries right away, no reload; on restores them. What you learned yourself is kept.</li>
+        </ul>
+      </div>
+
+      <div class="change-entry">
+        <div class="change-head">
           <span class="change-version">Conquest of AzerothCore</span>
           <span class="change-date">November 6, 2026</span>
         </div>
@@ -688,6 +702,10 @@
           <li>Starting-area fixes: quests from other zones no longer show as available in Valley of Trials, Camp Narache, Shadowglen, Coldridge Valley and Deathknell.</li>
           <li>Minimap objective clusters no longer pile up: pins from the same quest and creature closer than 25 yards are drawn once (<span class="mono">/aql thin &lt;yards&gt;</span> to change, 0 for every spawn point). Learned spawn pins that duplicate the database are no longer stacked on top of it.</li>
           <li><b>Learned quest-item drop rates.</b> Loot a mob while you still need a quest item and the addon counts how often it drops. Hover that kind of mob later to see e.g. <i>Grizzled Bear Heart &mdash; 41% (learned 12/29)</i>; mobs the database already knows show its rate too. <span class="mono">/aqldrops</span> shows totals, <span class="mono">/aqldrops reset</span> clears them. Uses the existing &ldquo;drop rate in tooltips&rdquo; setting.</li>
+          <li><b>Quest marker size.</b> New <b>Quest Marker Size</b> setting under Questing scales the yellow ! (available) and ? (turn-in) pins on the world map and minimap, from 60% to 240%.</li>
+          <li><b>Holiday / event quests.</b> <b>Show Seasonal / Holiday Quest Givers</b> (Questing) is now absolute: off, the default, means the arrow, map and minimap never point you at event quests (Hallow&rsquo;s End, Children&rsquo;s Week, Battleground holidays, ...) even if the server&rsquo;s calendar says an event is running.</li>
+          <li><b>Conquest of AzerothCore runs only off its own database.</b> With the CoA database on, its quests, givers, turn-ins, objectives and NPC/object spawns replace the Ascension/bundled positions (1,060 NPCs the site has no spawn for lose their old Ascension pins), and what you learn is stored separately from Ascension (<span class="mono">/aqlprofile</span>).</li>
+          <li><b>World-map quest markers work like Questie.</b> The yellow ! shows for every quest you can pick up in whichever zone the world map is showing, controlled by <b>Quest Marker (!) on the World Map</b> under Questing.</li>
           <li><b>Available quests on the world map.</b> A yellow ! now shows on the world map for quest givers you can pick up in your current zone. Turn it off with <b>Show Available Quests (!) on the World Map</b> under Questing.</li>
           <li>New <span class="mono">/aql arrow on|off|toggle</span>, <span class="mono">/aql turnin</span> and <span class="mono">/aql pickup</span> commands.</li>
           <li><b>Update note:</b> this release adds new data files, so fully restart the game client &mdash; <span class="mono">/reload</span> won't load them.</li>

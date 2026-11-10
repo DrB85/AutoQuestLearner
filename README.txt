@@ -493,8 +493,69 @@ everyone else using this addon too, not just you.
 
 
 ----------------------------------------
+ CHANGELOG (November 9, 2026)
+----------------------------------------
+
+World-map markers that stay
+  - The yellow ! (available) and ? (ready to turn in) on the world map are now
+    drawn by their own marker module, Questie-style, and redrawn on every map
+    change, zoom, zone change and quest-log update. They no longer vanish after
+    you close or change the map. Continent/world views show none (no pins in
+    the ocean).
+  - The map builds its own giver list, so flagging a quest no longer empties
+    the pins.
+
+Quest givers that don't actually have the quest
+  - Open an NPC's window and it doesn't offer a quest we expected: the quest is
+    flagged and the arrow moves on (now also works for coordinate-only givers
+    from the community seed, not just NPCs with IDs in the data).
+  - Target a friendly giver at its spot and no window opens within 3 seconds:
+    its expected quests are flagged (NPCs you can't talk to).
+  - Stand at an "(available)" spot for 12 seconds with no window: flagged.
+  - Each prints a message; /aql unavailable clear <questID> undoes it.
+
+Conquest of AzerothCore is the default
+  - First login (and a one-time update for existing installs that never chose):
+    Conquest of AzerothCore mode ON; Ascension community starter data, TBC and
+    Wotlk data OFF. Anyone can turn those on later.
+  - New "Use Community Starter Data (Ascension seed)" toggle (Questing). Off
+    removes seeded entries right away (no reload); on restores them. Entries you
+    learned yourself are kept.
+
+World map shows every quest your level allows
+  - The ! on the world map now lists every quest whose required level you meet
+    (grey ones too, like Questie) instead of following the arrow's nearby /
+    level-range preferences.
+  - Conquest of AzerothCore level requirements are now bundled (10,600+ quests),
+    and its starting-area NPCs (Deathknell, Shadowglen, Coldridge Valley, Valley
+    of Trials, Camp Narache) are placed on their own maps: about 700 more quests
+    now have a giver location. 254 quests remain without one because the site
+    has no coordinates for their (script-spawned) NPCs; they appear once you
+    learn the spot. Northshire, Ammen Vale and Sunstrider Isle have no map in
+    the addon yet.
+  - CLUCK! (started by a /chicken emote) no longer gets pins or an arrow.
+
+----------------------------------------
  CHANGELOG (November 6, 2026)
 ----------------------------------------
+
+Quest marker size
+  - New "Quest Marker Size" setting (Questing): scales the yellow ! (available)
+    and ? (turn-in) pins on the world map and minimap, 60% to 240%.
+
+Holiday / event quests
+  - "Show Seasonal / Holiday Quest Givers" (Questing) is now absolute: off (the
+    default) means the arrow, map and minimap never point you at event quests
+    (Hallow's End, Children's Week, Battleground holidays, ...) even if the
+    server's calendar says an event is running; on shows them.
+
+Conquest of AzerothCore database runs on its own
+  - With the CoA database on, its quests, givers, turn-ins, objectives and
+    NPC/object spawns replace the Ascension/bundled positions, and what you
+    learn is stored separately from Ascension (/aqlprofile shows which).
+  - World-map quest markers now work like Questie: the ! shows for every quest
+    you can pick up in whichever zone the map is showing ("Quest Marker (!)
+    on the World Map" under Questing).
 
 Learned quest-item drop rates
   - Loot a mob while you still need a quest item and the addon counts how often
